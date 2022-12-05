@@ -46,11 +46,6 @@ function! s:StartHL()
     if !get(g:,'cool_total_matches') || !exists('*reltimestr')
         return
     endif
-    exe "silent! norm! :let g:cool_char=nr2char(screenchar(screenrow(),1))\<cr>"
-    let cool_char = remove(g:,'cool_char')
-    if cool_char !~ '[/?]'
-        return
-    endif
     let [f, ws, now, noOf] = [0, &wrapscan, reltime(), [0,0]]
     set nowrapscan
     try
@@ -71,7 +66,7 @@ function! s:StartHL()
         call winrestview(pos)
         let &wrapscan = ws
     endtry
-    redraw|echo cool_char.@/ 'match' noOf[0] 'of' noOf[0] + noOf[1] - 1
+    redraw|echo '/<'.@/. '> match' noOf[0] 'of' noOf[0] + noOf[1] - 1
 endfunction
 
 function! s:StopHL()
